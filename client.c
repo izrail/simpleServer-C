@@ -17,7 +17,7 @@ int main(int argc,char** argv){
     }
 
     if((socketFd = socket(AF_INET,SOCK_STREAM,0)) < 0){
-        printf("Create socket error:%s(errNo: %d)\n",strerror(errno),errno);
+        printf("create socket error:%s(errNo: %d)\n",strerror(errno),errno);
         exit(0);
     }
 
@@ -29,17 +29,22 @@ int main(int argc,char** argv){
         exit(0);
     }
     if( connect(socketFd,(struct sockaddr*)&serverAddress,sizeof(serverAddress)) < 0){
-        printf("create socket error:%s(errNo: %d)\n",strerror(errno),errno);
+        printf("connect socket error:%s(errNo: %d)\n",strerror(errno),errno);
         exit(0);
     }
+    while (1){
+        printf("send message to server:\n");
+        sendLine[0]='\0';
+        fgets(sendLine,4096,stdin);
 
-    printf("send message to server:\n");
-    fgets(sendLine,4096,stdin);
-
-    if (send(socketFd,sendLine,strlen(sendLine),0) < 0){
-        printf("Create socket error:%s(errNo: %d)\n",strerror(errno),errno);
-        exit(0);
+        if (send(socketFd,sendLine,strlen(sendLine),0) < 0){
+            printf("send socket error:%s(errNo: %d)\n",strerror(errno),errno);
+            exit(0);
+        }
+        printf("after Send\n");
     }
+    
+    
     close(socketFd);
     exit(0);
 }

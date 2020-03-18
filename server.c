@@ -32,14 +32,20 @@ int main(){
         exit(0);
     }
     while (1){
-        if ( (connFd = accept(socketFd,(struct sockaddr*)NULL,NULL)) == -1){
+        printf("test1\n");
+        if ( (connFd = accept(socketFd,(struct sockaddr*)NULL,NULL)) < 0){
             printf("accept socket error:%s(errno: %d\n",strerror(errno),errno);
             continue;
         }
-    n = recv(connFd,buffer,MAXLINE,0);
-    buffer[n] ='\0';
-    printf("recive message from client:%s\n",buffer);
+    }
+    while (1)
+    {
+        printf("test buffer:\n%s shenme\n",buffer);
+        n = recv(connFd,buffer,MAXLINE,0);
+        buffer[n] ='\0';
+        printf("recive message from client:\n%s shenme",buffer);
+        printf("test2\n\n\n");
+    }
     close(connFd);
-    } 
     close(socketFd);
 }
