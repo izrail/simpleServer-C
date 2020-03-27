@@ -1,7 +1,17 @@
 all:clean run
 .PHONY :run
 run:
-	gcc client.c -o ./run/client
-	gcc server.c -o ./run/server
+	gcc ./src/client.c -o ./bin/client
+	gcc ./src/server.c -o ./bin/server
+
+.PHONY:server
+server:
+	./bin/server
+
+.PHONY:client
+client:
+	./bin/client 47.56.171.178
+
 clean:
-	rm -rf ./run/*
+	rm -rf ./bin/*
+
